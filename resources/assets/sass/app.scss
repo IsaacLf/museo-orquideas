@@ -1,0 +1,225 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+// @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~material-dashboard/assets/scss/material-dashboard';
+@import '~dropzone/dist/min/dropzone.min';
+// @import '~bootstrap/scss/bootstrap';
+
+//Fontawesome
+// @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+// @import '~@fortawesome/fontawesome-free/scss/brands';
+// @import '~@fortawesome/fontawesome-free/scss/solid';
+// @import '~@fortawesome/fontawesome-free/scss/regular';
+// @import '~@fortawesome/fontawesome-free/scss/variables';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+#sidebar {
+  width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
+  background: rgb(29, 6, 43);
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebar.active {
+  margin-left: -150px;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #6d7fcc;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #7386D5;
+  background: rgb(63, 62, 62);
+}
+
+[id="sidebar"] ul li.active > a {
+  color: #fff;
+  background: #091447;
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+// .dropdown-toggle::after {
+//   display: block;
+//   position: absolute;
+//   top: 50%;
+//   right: 20px;
+//   transform: translateY(-50%);
+// }
+
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -150px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+[id="main-tag"] {
+  padding-left: 150px;
+  display: flex;
+  width: 100%;
+}
+
+ul.mylist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+p.card-text > a, ul.mylist li > a, div.card-body > a, ol.breadcrumb li.breadcrumb-item:not(.active) {
+  color: darkcyan;
+}
+p.card-text > a:hover, ul.mylist li > a:hover, div.card-body > a:hover {
+  color: white;
+}
+
+
+h1.my-inline-block {
+  margin: 0;
+  display: inline-block;
+}
+
+h1.my-inline-block + a {
+  float: right;
+}
+
+table tr td > a {
+  color: blue;
+}
+
+.isDisabled {
+  cursor: none;
+  pointer-events: none;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.img-resize {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.img-group {
+  width: 100%;
+  height: auto;
+}
+
+div.img-group > img.img-item {
+  object-fit: cover;
+  width: 12%;
+  height: 80px;
+  border-radius: 4px;
+  padding-left: 3px;
+  padding-bottom: 3px;
+}
+
+div.img-group-8 > img.img-item {
+  object-fit: cover;
+  width: calc( (1/8) * 100%);
+  height: 120px;
+  border-radius: 4px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+}
+
+img.img-square {
+  object-fit: cover;
+  height: 120px;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.modal-open .modal {
+  overflow-y: auto;
+}

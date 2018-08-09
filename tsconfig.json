@@ -1,0 +1,14 @@
+{
+  "lib": [
+    "dom",
+    "es2016"
+  ],
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "sourceMap": true
+  },
+  "include": [
+    "resources/assets/ts/**/*"
+  ]
+}
