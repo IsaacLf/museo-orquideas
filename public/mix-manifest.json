@@ -1,4 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/all.css": "/css/all.css",
+    "/js/plupload.js": "/js/plupload.js",
+    "/js/material-dasboard.js": "/js/material-dasboard.js",
+    "/js/jquery.ui.plupload.js": "/js/jquery.ui.plupload.js"
 }

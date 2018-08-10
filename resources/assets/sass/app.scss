@@ -8,7 +8,8 @@
 // Bootstrap
 // @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import '~material-dashboard/assets/scss/material-dashboard';
-@import '~dropzone/dist/min/dropzone.min';
+// @import 'style!css~dropzone/dist/min/dropzone.min'; 
+// @import 'style!css~plupload/js/jquery.ui.plupload/css/jquery.ui.plupload';
 // @import '~bootstrap/scss/bootstrap';
 
 //Fontawesome
@@ -175,6 +176,15 @@ div.img-group-8 > img.img-item {
 img.img-square {
   object-fit: cover;
   height: 120px;
+}
+
+.fixed-height {
+  height: 250px;
+  overflow-y: auto;
+}
+
+.modal-dialog{
+  overflow-y: initial !important;
 }
 
 .upload-btn-wrapper {

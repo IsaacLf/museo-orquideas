@@ -7,6 +7,13 @@
 
 require('./bootstrap');
 window.Dropzone = require('dropzone/dist/min/dropzone.min');
+/* Plupload Library */
+// try{
+//     require('plupload/js/plupload.full.min');
+//     require('plupload/js/jquery.ui.plupload/jquery.ui.plupload.min');
+// }catch(e){
+//     console.log(e);
+// }
 window.Vue = require('vue');
 
 /**
@@ -24,16 +31,16 @@ const app = new Vue({
     el: '#app'
 });
 
-Dropzone.options.filedrop = {
-    init: function () {
-    this.on("queuecomplete", function (file) {
-        // if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-        //     window.location.reload();
-        // }
-        window.location.reload();
-    });
-    },
-};
+// Dropzone.options.filedrop = {
+//     init: function () {
+//     this.on("queuecomplete", function (file) {
+//         // if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+//         //     window.location.reload();
+//         // }
+//         window.location.reload();
+//     });
+//     },
+// };
 
 // jQuery( document ).ready(function($){
 //     $("button [target='elegirImagen']").on("click", function(){

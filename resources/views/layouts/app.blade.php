@@ -75,6 +75,7 @@
         </main>
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/material-dasboard.js') }}"></script>
 </body>
 </html>
