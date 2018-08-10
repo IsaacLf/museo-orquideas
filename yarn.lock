@@ -4860,7 +4860,17 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-jquery@^3.2:
+jquery-ui-dist@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
+
+jquery-ui@jquery/jquery-ui:
+  version "1.12.2-pre"
+  resolved "https://codeload.github.com/jquery/jquery-ui/tar.gz/74f8a0ac952f6f45f773312292baef1c26d81300"
+  dependencies:
+    jquery ">=1.7.0 <4.0.0"
+
+"jquery@>=1.7.0 <4.0.0", jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -6679,6 +6689,10 @@ plugin-error@^0.1.2:
     arr-diff "^1.0.1"
     arr-union "^2.0.1"
     extend-shallow "^1.1.2"
+
+plupload@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/plupload/-/plupload-2.3.6.tgz#2608acf735d5e8db83248724d78d81757bb43866"
 
 pngquant-bin@^4.0.0:
   version "4.0.0"

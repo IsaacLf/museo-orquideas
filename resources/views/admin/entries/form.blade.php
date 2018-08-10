@@ -59,7 +59,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body text-dark">
-                                    <div class="img-group">
+                                    <div class="img-group fixed-height">
                                         @foreach(App\Media::all() as $image)
                                             <img src="{{ asset('storage/media/'.$image->image) }}" alt="{{ $image->name }}" class="img-item">
                                         @endforeach

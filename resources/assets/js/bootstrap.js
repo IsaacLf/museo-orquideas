@@ -13,13 +13,13 @@ try {
     require('bootstrap');
     //Core
     // require('material-dashboard/assets/js/core/popper.min');
-    require('material-dashboard/assets/js/core/bootstrap-material-design.min');
+    // require('material-dashboard/assets/js/core/bootstrap-material-design.min');
     //Plugins
-    require('material-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min');
-    require('material-dashboard/assets/js/plugins/chartist.min');
-    require('material-dashboard/assets/js/plugins/bootstrap-notify');
+    // require('material-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min');
+    // require('material-dashboard/assets/js/plugins/chartist.min');
+    // require('material-dashboard/assets/js/plugins/bootstrap-notify');
     //Material Dashboard
-    require('material-dashboard/assets/js/material-dashboard.min');
+    // require('material-dashboard/assets/js/material-dashboard.min');
 } catch (e) {}
 
 /**
