@@ -38,7 +38,7 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         if( $request->hasFile( 'file' ) ) {
-            $time = Carbon::now('d-m-Y');
+            $time = Carbon::now('America/Merida')->format('d-m-Y');
             $imgExtension = $request->file('file')->getClientOriginalExtension();
             $image = $request->file('file')->getRealPath();
             $imgName = $request->file('file')->getClientOriginalName();
@@ -52,9 +52,18 @@ class MediaController extends Controller
             $media->image = $time.$imgName;
             $media->imageType = '.'.$imgExtension;
             if($media->save()){
-                return redirect('/');
+                return response()->json([
+                    'name'=> $request->file('file')->getClientOriginalName(),
+                    'extension' => $request->file('file')->getClientOriginalExtension()
+                ]);
             }
         }
+        // if($request->hasFile('file')){
+        //     return response()->json([
+        //         'name'=> $request->file('file')->getClientOriginalName(),
+        //         'extension' => $request->file('file')->getClientOriginalExtension()
+        //     ]);
+        // }
     }
 
     /**
@@ -108,25 +117,10 @@ class MediaController extends Controller
      * @return string
      */
     public function uploadImage(Request $request){
-
-        if( $request->hasFile( 'file' ) ) {
-            $time = Carbon::now('America/Merida')->format('d-m-Y');
-            $imgExtension = $request->file('file')->getClientOriginalExtension();
-            $image = $request->file('file')->getRealPath();
-            $imgName = $request->file('file')->getClientOriginalName();
-            // $imageResize = Image::make($image)->resize(300,300);
-            Storage::put(
-                'public/media/'.$time.$imgName,
-                file_get_contents($image)
-            );
-            $media = new Media;
-            $media->name = $imgName;
-            $media->image = $time.$imgName;
-            $media->imageType = '.'.$imgExtension;
-            if($media->save()){
-                return redirect('/');
-            }
-        }
+        // if( $request->hasFile( 'file' ) ) {
+            
+        // }
+        return redirect('/upload');
     }
 
 }
