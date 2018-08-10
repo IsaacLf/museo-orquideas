@@ -95,6 +95,7 @@
     </div>
     <!-- Scripts -->
     <link href="{{ asset('css/fa/js/all.js') }}" rel="stylesheet">
+    <script src="{{ asset('js/plupload.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/material-dasboard.js') }}"></script>
     @yield('scripts')
