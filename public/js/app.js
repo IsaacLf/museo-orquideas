@@ -64092,15 +64092,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                         </a>
 //                     </li>
 //                 </ul>
-//                 <form class="form-inline">
-//                     <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-//                     <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
-//                 </form>
+//                 <transition name="fade">
+//                     <form class="form-inline" v-show="search">
+//                         <input class="form-control text-white" type="search" placeholder="Buscar" aria-label="Search" v-model="stext">
+//                     </form>
+//                 </transition>
 //             </div>
 //         </nav>
 //         <div class="container-fluid">
 //             <transition name="component-fade" mode="out-in">
-//                 <component v-bind:is="currentComponent" :media="media" :asset="asset"></component>
+//                 <component v-bind:is="currentComponent" :media="media" :asset="asset" :stext="stext"></component>
 //             </transition>
 //         </div>
 //     </div>
@@ -64119,6 +64120,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             currentLink: 'square',
             flag: false,
+            search: false,
+            stext: '',
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         };
     },
@@ -64131,6 +64134,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         setCurrent: function setCurrent(string) {
             this.currentLink = string;
+            if (string === 'list') {
+                this.search = true;
+            } else {
+                this.search = false;
+            }
         },
         initForm: function initForm() {
             $(document).ready(function () {
@@ -64159,12 +64167,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     chunk_size: '1mb',
 
                     // Resize images on clientside if we can
-                    resize: {
-                        width: 200,
-                        height: 200,
-                        quality: 90,
-                        crop: true // crop to exact dimensions
-                    },
+                    // resize : {
+                    //     width: 200, 
+                    //     height: 200, 
+                    //     quality: 90,
+                    //     crop: true // crop to exact dimensions
+                    // },
 
                     // Specify what files to browse for
                     filters: [{ title: "Image files", extensions: "jpg,gif,png" }, { title: "Zip files", extensions: "zip,avi" }],
@@ -64190,7 +64198,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //This was added by me ~Victor~ to Change the language of the showed up text, so it can be in spanish
                 $(document).ready(function () {
                     $('.plupload_header_title').text('Selecciona tus archivos');
-                    $('.plupload_header_text').text('Añade archivos a la cola y luego da click en el botón \'Iniciar carga\'');
+                    $('.plupload_header_text').text('Añade archivos a la cola y luego da click en el botón \'Iniciar carga\' o en el botón Guardar');
                     $('div.plupload_droptext').text('Arrastra archivos aquí');
                     $('a#uploader_browse >.ui-button-text').text('Añadir archivos');
                     $('a#uploader_start >.ui-button-text').text('Iniciar carga');
@@ -64223,7 +64231,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 170 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Biblioteca de medios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"flag = !flag\" class=\"btn btn-warning\">Añadir nuevo</a>\n            <transition name=\"slide-fade\">\n                <input v-show=\"flag\" class=\"btn btn-success\" type=\"submit\" value=\"Guardar\" form=\"form\"/>\n            </transition>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row\" v-show=\"flag\">\n            <div class=\"col-md-12\">\n                <form id=\"form\" method=\"post\" v-bind:action=\"action+'/upload-new'\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                    <div id=\"uploader\">\n                        <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>\n                    </div>\n                </form>\n                <!-- <form v-bind:action=\"action+'/upload-new'\" method=\"POST\" class=\"dropzone\" id=\"imageDrop\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                </form> -->\n            </div>\n        </div>\n    </transition>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark justify-content-between mb-0\" style=\"height:50px;\">\n        <div class=\"container\">\n            <ul class=\"navbar-nav\">\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='list' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('list')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th-list\"></span>\n                    </a>\n                </li>\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='square' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('square')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th\"></span>\n                    </a>\n                </li>\n            </ul>\n            <form class=\"form-inline\">\n                <input class=\"form-control\" type=\"search\" placeholder=\"Buscar\" aria-label=\"Search\">\n                <button class=\"btn btn-primary btn-sm\" type=\"submit\">Buscar</button>\n            </form>\n        </div>\n    </nav>\n    <div class=\"container-fluid\">\n        <transition name=\"component-fade\" mode=\"out-in\">\n            <component v-bind:is=\"currentComponent\" :media=\"media\" :asset=\"asset\"></component>\n        </transition>\n    </div>\n</div>\n";
+module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Biblioteca de medios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"flag = !flag\" class=\"btn btn-warning\">Añadir nuevo</a>\n            <transition name=\"slide-fade\">\n                <input v-show=\"flag\" class=\"btn btn-success\" type=\"submit\" value=\"Guardar\" form=\"form\"/>\n            </transition>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row\" v-show=\"flag\">\n            <div class=\"col-md-12\">\n                <form id=\"form\" method=\"post\" v-bind:action=\"action+'/upload-new'\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                    <div id=\"uploader\">\n                        <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>\n                    </div>\n                </form>\n                <!-- <form v-bind:action=\"action+'/upload-new'\" method=\"POST\" class=\"dropzone\" id=\"imageDrop\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                </form> -->\n            </div>\n        </div>\n    </transition>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark justify-content-between mb-0\" style=\"height:50px;\">\n        <div class=\"container\">\n            <ul class=\"navbar-nav\">\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='list' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('list')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th-list\"></span>\n                    </a>\n                </li>\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='square' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('square')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th\"></span>\n                    </a>\n                </li>\n            </ul>\n            <transition name=\"fade\">\n                <form class=\"form-inline\" v-show=\"search\">\n                    <input class=\"form-control text-white\" type=\"search\" placeholder=\"Buscar\" aria-label=\"Search\" v-model=\"stext\">\n                </form>\n            </transition>\n        </div>\n    </nav>\n    <div class=\"container-fluid\">\n        <transition name=\"component-fade\" mode=\"out-in\">\n            <component v-bind:is=\"currentComponent\" :media=\"media\" :asset=\"asset\" :stext=\"stext\"></component>\n        </transition>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 171 */
@@ -64301,7 +64309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                                     </div>
 //                                 </td>
 //                             </tr>
-//                             <tr v-for="item in media" v-bind:key="item.id">
+//                             <tr v-for="item in mData" v-bind:key="item.id">
 //                                 <td>
 //                                     <div class="img-container">
 //                                         <img class="img-square" v-bind:src="asset+'/'+item.image" v-bind:alt="item.name">
@@ -64332,15 +64340,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         media: {},
-        asset: {}
+        asset: {},
+        stext: String
     },
     data: function data() {
         return {};
     },
 
+    created: function created() {
+        // this.stext = 'g';
+    },
+    computed: {
+        mData: function mData() {
+            if (this.stext === '') {
+                return this.media;
+            } else {
+                var text = this.stext;
+                return _.filter(this.media, function (obj) {
+                    return _.includes(_.toLower(obj.name), _.toLower(text));
+                });
+            }
+        }
+    },
     methods: {
         getDate: function getDate(value) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()(value).locale('es').format('llll');
+        },
+        startsW: function startsW(name) {
+            return _.startsWith(_.toLower(name), 'g');
         }
     }
     // </script>
@@ -64352,7 +64379,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 173 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-header card-header-success\">\n            <h4 class=\"card-title\">Vista de Lista</h4>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-shopping\">\n                    <thead>\n                        <tr>\n                            <th>Imagen</th>\n                            <th>Nombre</th>\n                            <th>Fecha</th>\n                            <th>Acciones</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr v-if=\"media.length === 0\" >\n                            <td>\n                                No hay elementos\n                            </td>\n                            <td>Para subir uno nuevo</td>\n                            <td>Pulsa el botón \"añadir nuevo\"</td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr v-for=\"item in media\" v-bind:key=\"item.id\">\n                            <td>\n                                <div class=\"img-container\">\n                                    <img class=\"img-square\" v-bind:src=\"asset+'/'+item.image\" v-bind:alt=\"item.name\">\n                                </div>\n                            </td>\n                            <td> {{ item.name }} </td>\n                            <td> {{ getDate(item.created_at) }} </td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-header card-header-success\">\n            <h4 class=\"card-title\">Vista de Lista</h4>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-shopping\">\n                    <thead>\n                        <tr>\n                            <th>Imagen</th>\n                            <th>Nombre</th>\n                            <th>Fecha</th>\n                            <th>Acciones</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr v-if=\"media.length === 0\" >\n                            <td>\n                                No hay elementos\n                            </td>\n                            <td>Para subir uno nuevo</td>\n                            <td>Pulsa el botón \"añadir nuevo\"</td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr v-for=\"item in mData\" v-bind:key=\"item.id\">\n                            <td>\n                                <div class=\"img-container\">\n                                    <img class=\"img-square\" v-bind:src=\"asset+'/'+item.image\" v-bind:alt=\"item.name\">\n                                </div>\n                            </td>\n                            <td> {{ item.name }} </td>\n                            <td> {{ getDate(item.created_at) }} </td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 174 */
