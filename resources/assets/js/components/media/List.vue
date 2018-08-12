@@ -33,7 +33,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-for="item in media" v-bind:key="item.id">
+                            <tr v-for="item in mData" v-bind:key="item.id">
                                 <td>
                                     <div class="img-container">
                                         <img class="img-square" v-bind:src="asset+'/'+item.image" v-bind:alt="item.name">
@@ -64,16 +64,35 @@ import moment from 'moment'
 export default {
     props: {
         media: {},
-        asset: {}
+        asset: {},
+        stext: String,
     },
     data() {
         return {
-
+            
         }
+    },
+    created: function(){
+        // this.stext = 'g';
+    },
+    computed: {
+        mData: function(){
+            if(this.stext === ''){
+                return this.media;
+            }else{
+                var text = this.stext;
+                return _.filter(this.media, function(obj){
+                    return (_.includes(_.toLower(obj.name), _.toLower(text)));
+                });
+            }
+        }        
     },
     methods: {
         getDate: function(value){
             return moment(value).locale('es').format('llll');
+        },
+        startsW: function(name){
+            return _.startsWith(_.toLower(name), 'g');
         }
     }
 }

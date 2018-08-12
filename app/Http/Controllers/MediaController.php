@@ -38,7 +38,7 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         if( $request->hasFile( 'file' ) ) {
-            $time = Carbon::now('America/Merida')->format('d-m-Y');
+            $time = Carbon::now('America/Merida')->format('d-m-Y_H-i-s');
             $imgExtension = $request->file('file')->getClientOriginalExtension();
             $image = $request->file('file')->getRealPath();
             $imgName = $request->file('file')->getClientOriginalName();
