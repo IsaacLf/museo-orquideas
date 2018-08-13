@@ -30321,6 +30321,7 @@ Vue.component('entries', __webpack_require__(13));
 Vue.component('media', __webpack_require__(168));
 Vue.component('media-list', __webpack_require__(171));
 Vue.component('media-square', __webpack_require__(174));
+Vue.component('users', __webpack_require__(182));
 
 var app = new Vue({
   el: '#app'
@@ -63618,16 +63619,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //     <div>
 //         <div class="row justify-content mb-0">
 //             <div class="col md-auto">
-//                 <nav aria-label="breadcrumb">
-//                     <ol class="breadcrumb mb-0" style="background-color: white;">
-//                         <li class="breadcrumb-item" v-bind:class="[{active: isAllSelected, isDisabled: isAllSelected}]">
-//                             <a @click="isAllSelected = !isAllSelected" href="#">Todos ( {{ numEntry }} )</a>
-//                         </li>
-//                         <li class="breadcrumb-item" v-bind:class="[{active: !isAllSelected, isDisabled: !isAllSelected}]"> 
-//                             <a @click="isAllSelected = !isAllSelected" href="#">Mios ( {{ numMine }} )</a>
-//                         </li>
-//                     </ol>
-//                 </nav>
+//                 <ul class="nav nav-pills nav-pills-icons nav-pills-primary nav-justify" role="tablist">
+//                     <li class="nav-item">
+//                         <a class="nav-link" @click="isAllSelected = true" href="#" v-bind:class="[{active: isAllSelected, isDisabled: isAllSelected}]" role="tab">
+//                             <i class="fas fa-star"></i>
+//                             Todos ( {{ numEntry }} )
+//                         </a>
+//                     </li>
+//                     <li class="nav-item"> 
+//                         <a class="nav-link" @click="isAllSelected = false" href="#" v-bind:class="[{active: !isAllSelected, isDisabled: !isAllSelected}]" role="tab">
+//                             <i class="fas fa-user-check"></i>
+//                             Mios ( {{ numMine }} )
+//                         </a>
+//                     </li>
+//                     <form class="form-inline ml-2">
+//                         <input class="form-control text-dark" type="search" placeholder="Buscar por título" size="50" aria-label="Search" v-model="stext">
+//                     </form>
+//                 </ul>
+//
 //             </div>
 //         </div>
 //         <div class="row justify-content">
@@ -63640,17 +63649,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                     <div class="card-body">
 //                         <div class="table-responsive">
 //                             <table class="table table-shopping">
-//                                 <thead class="text-info">
+//                                 <thead class="text-info text-center">
 //                                     <tr>
 //                                         <th>ID</th>
 //                                         <th>Título</th>
-//                                         <th>Autor</th>
+//                                         <th :class="{'text-warning': !isAllSelected}">Autor</th>
 //                                         <th>Fecha</th>
 //                                         <th>Acciones</th>
 //                                     </tr>
 //                                 </thead>
-//                                 <tbody>
-//                                     <tr v-for="entry in data" v-bind:key="entry.id">
+//                                 <tbody class="text-center">
+//                                     <tr v-for="entry in aData" v-bind:key="entry.id">
 //                                         <td>{{entry.id}}</td>
 //                                         <td><a v-bind:href="url+'/'+entry.id">{{ entry.title }}</a></td>
 //                                         <td>{{ entry.author }}</td>
@@ -63671,6 +63680,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                                     </tr>
 //                                 </tbody>
 //                             </table>
+//                         </div>
+//                         <div class="alert alert-danger" role="alert" v-if="aData.length === 0 && stext === '' ">
+//                             <strong>
+//                                 No hay entradas disponibles, prueba escribiendo nuevas.
+//                             </strong>
+//                         </div>
+//                         <div class="alert alert-danger" role="alert" v-else-if="aData.length === 0 && stext !== '' ">
+//                             <strong>
+//                                 No se ha encontrado ninguna coincidencia para "{{ stext }}"
+//                             </strong> 
 //                         </div>
 //                     </div>
 //                 </div>
@@ -63694,7 +63713,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             numEntry: JSON.parse(this.entry),
             numMine: JSON.parse(this.mine),
             isAllSelected: true,
-            myEntries: []
+            myEntries: [],
+            stext: ''
         };
     },
 
@@ -63702,11 +63722,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getUserEntries();
     },
     computed: {
-        data: function data() {
+        aData: function aData() {
             if (this.isAllSelected) {
-                return this.entries;
+                return this.getFiltered(this.entries);
             } else {
-                return this.myEntries;
+                return this.getFiltered(this.myEntries);
             }
         },
         Title: function Title() {
@@ -63730,6 +63750,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getDate: function getDate(value) {
             return __WEBPACK_IMPORTED_MODULE_1_moment___default()(value).locale('es').format("llll");
+        },
+        getFiltered: function getFiltered(array) {
+            var text = this.stext;
+            if (text === '') {
+                return array;
+            }
+            return _.filter(array, function (obj) {
+                return _.includes(_.toLower(obj.title), _.toLower(text));
+            });
         }
     }
     // </script>
@@ -64009,7 +64038,7 @@ webpackContext.id = 166;
 /* 167 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n    <div class=\"row justify-content mb-0\">\n        <div class=\"col md-auto\">\n            <nav aria-label=\"breadcrumb\">\n                <ol class=\"breadcrumb mb-0\" style=\"background-color: white;\">\n                    <li class=\"breadcrumb-item\" v-bind:class=\"[{active: isAllSelected, isDisabled: isAllSelected}]\">\n                        <a @click=\"isAllSelected = !isAllSelected\" href=\"#\">Todos ( {{ numEntry }} )</a>\n                    </li>\n                    <li class=\"breadcrumb-item\" v-bind:class=\"[{active: !isAllSelected, isDisabled: !isAllSelected}]\"> \n                        <a @click=\"isAllSelected = !isAllSelected\" href=\"#\">Mios ( {{ numMine }} )</a>\n                    </li>\n                </ol>\n            </nav>\n        </div>\n    </div>\n    <div class=\"row justify-content\">\n        <div class=\"col md-auto\">\n            <div class=\"card\">\n                <div class=\"card-header card-header-success\">\n                    <h4 class=\"card-title\">{{ Title }}</h4>\n                    <p class=\"card-category\">{{ Category }}</p>\n                </div>\n                <div class=\"card-body\">\n                    <div class=\"table-responsive\">\n                        <table class=\"table table-shopping\">\n                            <thead class=\"text-info\">\n                                <tr>\n                                    <th>ID</th>\n                                    <th>Título</th>\n                                    <th>Autor</th>\n                                    <th>Fecha</th>\n                                    <th>Acciones</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr v-for=\"entry in data\" v-bind:key=\"entry.id\">\n                                    <td>{{entry.id}}</td>\n                                    <td><a v-bind:href=\"url+'/'+entry.id\">{{ entry.title }}</a></td>\n                                    <td>{{ entry.author }}</td>\n                                    <td>{{ getDate(entry.created_at) }}</td>\n                                    <td>\n                                        <div class=\"btn-group\">\n                                            <a :href=\"url+'/'+entry.id+'/edit'\" class=\"btn btn-round btn-info btn-sm\">\n                                                <i class=\"fas fa-edit\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                                <i class=\"fas fa-trash\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-warning btn-sm\">\n                                                <i class=\"fas fa-qrcode\"></i>\n                                            </a>\n                                        </div>\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "\n<div>\n    <div class=\"row justify-content mb-0\">\n        <div class=\"col md-auto\">\n            <ul class=\"nav nav-pills nav-pills-icons nav-pills-primary nav-justify\" role=\"tablist\">\n                <li class=\"nav-item\">\n                    <a class=\"nav-link\" @click=\"isAllSelected = true\" href=\"#\" v-bind:class=\"[{active: isAllSelected, isDisabled: isAllSelected}]\" role=\"tab\">\n                        <i class=\"fas fa-star\"></i>\n                        Todos ( {{ numEntry }} )\n                    </a>\n                </li>\n                <li class=\"nav-item\"> \n                    <a class=\"nav-link\" @click=\"isAllSelected = false\" href=\"#\" v-bind:class=\"[{active: !isAllSelected, isDisabled: !isAllSelected}]\" role=\"tab\">\n                        <i class=\"fas fa-user-check\"></i>\n                        Mios ( {{ numMine }} )\n                    </a>\n                </li>\n                <form class=\"form-inline ml-2\">\n                    <input class=\"form-control text-dark\" type=\"search\" placeholder=\"Buscar por título\" size=\"50\" aria-label=\"Search\" v-model=\"stext\">\n                </form>\n            </ul>\n\n        </div>\n    </div>\n    <div class=\"row justify-content\">\n        <div class=\"col md-auto\">\n            <div class=\"card\">\n                <div class=\"card-header card-header-success\">\n                    <h4 class=\"card-title\">{{ Title }}</h4>\n                    <p class=\"card-category\">{{ Category }}</p>\n                </div>\n                <div class=\"card-body\">\n                    <div class=\"table-responsive\">\n                        <table class=\"table table-shopping\">\n                            <thead class=\"text-info text-center\">\n                                <tr>\n                                    <th>ID</th>\n                                    <th>Título</th>\n                                    <th :class=\"{'text-warning': !isAllSelected}\">Autor</th>\n                                    <th>Fecha</th>\n                                    <th>Acciones</th>\n                                </tr>\n                            </thead>\n                            <tbody class=\"text-center\">\n                                <tr v-for=\"entry in aData\" v-bind:key=\"entry.id\">\n                                    <td>{{entry.id}}</td>\n                                    <td><a v-bind:href=\"url+'/'+entry.id\">{{ entry.title }}</a></td>\n                                    <td>{{ entry.author }}</td>\n                                    <td>{{ getDate(entry.created_at) }}</td>\n                                    <td>\n                                        <div class=\"btn-group\">\n                                            <a :href=\"url+'/'+entry.id+'/edit'\" class=\"btn btn-round btn-info btn-sm\">\n                                                <i class=\"fas fa-edit\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                                <i class=\"fas fa-trash\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-warning btn-sm\">\n                                                <i class=\"fas fa-qrcode\"></i>\n                                            </a>\n                                        </div>\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                    <div class=\"alert alert-danger\" role=\"alert\" v-if=\"aData.length === 0 && stext === '' \">\n                        <strong>\n                            No hay entradas disponibles, prueba escribiendo nuevas.\n                        </strong>\n                    </div>\n                    <div class=\"alert alert-danger\" role=\"alert\" v-else-if=\"aData.length === 0 && stext !== '' \">\n                        <strong>\n                            No se ha encontrado ninguna coincidencia para \"{{ stext }}\"\n                        </strong> \n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 168 */
@@ -64057,7 +64086,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                 <h1 class="my-inline-block">Biblioteca de medios</h1>
 //             </div>
 //             <div class="col-md-auto">
-//                 <a href="#" @click="flag = !flag" class="btn btn-warning">Añadir nuevo</a>
+//                 <a href="#" @click="flag = !flag" class="btn btn-warning">
+//                     {{ flag ? 'Ocultar' : 'Añadir nuevo' }}
+//                 </a>
 //                 <transition name="slide-fade">
 //                     <input v-show="flag" class="btn btn-success" type="submit" value="Guardar" form="form"/>
 //                 </transition>
@@ -64231,7 +64262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 170 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Biblioteca de medios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"flag = !flag\" class=\"btn btn-warning\">Añadir nuevo</a>\n            <transition name=\"slide-fade\">\n                <input v-show=\"flag\" class=\"btn btn-success\" type=\"submit\" value=\"Guardar\" form=\"form\"/>\n            </transition>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row\" v-show=\"flag\">\n            <div class=\"col-md-12\">\n                <form id=\"form\" method=\"post\" v-bind:action=\"action+'/upload-new'\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                    <div id=\"uploader\">\n                        <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>\n                    </div>\n                </form>\n                <!-- <form v-bind:action=\"action+'/upload-new'\" method=\"POST\" class=\"dropzone\" id=\"imageDrop\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                </form> -->\n            </div>\n        </div>\n    </transition>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark justify-content-between mb-0\" style=\"height:50px;\">\n        <div class=\"container\">\n            <ul class=\"navbar-nav\">\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='list' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('list')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th-list\"></span>\n                    </a>\n                </li>\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='square' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('square')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th\"></span>\n                    </a>\n                </li>\n            </ul>\n            <transition name=\"fade\">\n                <form class=\"form-inline\" v-show=\"search\">\n                    <input class=\"form-control text-white\" type=\"search\" placeholder=\"Buscar\" aria-label=\"Search\" v-model=\"stext\">\n                </form>\n            </transition>\n        </div>\n    </nav>\n    <div class=\"container-fluid\">\n        <transition name=\"component-fade\" mode=\"out-in\">\n            <component v-bind:is=\"currentComponent\" :media=\"media\" :asset=\"asset\" :stext=\"stext\"></component>\n        </transition>\n    </div>\n</div>\n";
+module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Biblioteca de medios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"flag = !flag\" class=\"btn btn-warning\">\n                {{ flag ? 'Ocultar' : 'Añadir nuevo' }}\n            </a>\n            <transition name=\"slide-fade\">\n                <input v-show=\"flag\" class=\"btn btn-success\" type=\"submit\" value=\"Guardar\" form=\"form\"/>\n            </transition>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row\" v-show=\"flag\">\n            <div class=\"col-md-12\">\n                <form id=\"form\" method=\"post\" v-bind:action=\"action+'/upload-new'\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                    <div id=\"uploader\">\n                        <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>\n                    </div>\n                </form>\n                <!-- <form v-bind:action=\"action+'/upload-new'\" method=\"POST\" class=\"dropzone\" id=\"imageDrop\">\n                    <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                </form> -->\n            </div>\n        </div>\n    </transition>\n    <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark justify-content-between mb-0\" style=\"height:50px;\">\n        <div class=\"container\">\n            <ul class=\"navbar-nav\">\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='list' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('list')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th-list\"></span>\n                    </a>\n                </li>\n                <li class=\"nav-item\" v-bind:class=\"[ currentLink=='square' ? 'active' : '' ]\">\n                    <a @click=\"setCurrent('square')\" href=\"#\" class=\"nav-link\">\n                        <span class=\"fas fa-th\"></span>\n                    </a>\n                </li>\n            </ul>\n            <transition name=\"fade\">\n                <form class=\"form-inline\" v-show=\"search\">\n                    <input class=\"form-control text-white\" type=\"search\" placeholder=\"Buscar\" aria-label=\"Search\" v-model=\"stext\">\n                </form>\n            </transition>\n        </div>\n    </nav>\n    <div class=\"container-fluid\">\n        <transition name=\"component-fade\" mode=\"out-in\">\n            <component v-bind:is=\"currentComponent\" :media=\"media\" :asset=\"asset\" :stext=\"stext\"></component>\n        </transition>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 171 */
@@ -64292,23 +64323,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                             </tr>
 //                         </thead>
 //                         <tbody>
-//                             <tr v-if="media.length === 0" >
-//                                 <td>
-//                                     No hay elementos
-//                                 </td>
-//                                 <td>Para subir uno nuevo</td>
-//                                 <td>Pulsa el botón "añadir nuevo"</td>
-//                                 <td>
-//                                     <div class="btn-group">
-//                                         <a href="#" class="btn btn-round btn-info btn-sm">
-//                                             <i class="fas fa-edit"></i>
-//                                         </a>
-//                                         <a href="#" class="btn btn-round btn-danger btn-sm">
-//                                             <i class="fas fa-trash"></i>
-//                                         </a>
-//                                     </div>
-//                                 </td>
-//                             </tr>
 //                             <tr v-for="item in mData" v-bind:key="item.id">
 //                                 <td>
 //                                     <div class="img-container">
@@ -64330,6 +64344,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //                             </tr>
 //                         </tbody>
 //                     </table>
+//                 </div>
+//                 <div class="alert alert-danger" role="alert" v-if="mData.length === 0 && stext === '' ">
+//                     <strong>
+//                         No hay entradas disponibles, prueba escribiendo nuevas.
+//                     </strong>
+//                 </div>
+//                 <div class="alert alert-danger" role="alert" v-else-if="mData.length === 0 && stext !== '' ">
+//                     <strong>
+//                         No se ha encontrado ninguna coincidencia para "{{ stext}}"
+//                     </strong> 
 //                 </div>
 //             </div>
 //         </div>
@@ -64379,7 +64403,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 173 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-header card-header-success\">\n            <h4 class=\"card-title\">Vista de Lista</h4>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-shopping\">\n                    <thead>\n                        <tr>\n                            <th>Imagen</th>\n                            <th>Nombre</th>\n                            <th>Fecha</th>\n                            <th>Acciones</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr v-if=\"media.length === 0\" >\n                            <td>\n                                No hay elementos\n                            </td>\n                            <td>Para subir uno nuevo</td>\n                            <td>Pulsa el botón \"añadir nuevo\"</td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr v-for=\"item in mData\" v-bind:key=\"item.id\">\n                            <td>\n                                <div class=\"img-container\">\n                                    <img class=\"img-square\" v-bind:src=\"asset+'/'+item.image\" v-bind:alt=\"item.name\">\n                                </div>\n                            </td>\n                            <td> {{ item.name }} </td>\n                            <td> {{ getDate(item.created_at) }} </td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-header card-header-success\">\n            <h4 class=\"card-title\">Vista de Lista</h4>\n        </div>\n        <div class=\"card-body\">\n            <div class=\"table-responsive\">\n                <table class=\"table table-shopping\">\n                    <thead>\n                        <tr>\n                            <th>Imagen</th>\n                            <th>Nombre</th>\n                            <th>Fecha</th>\n                            <th>Acciones</th>\n                        </tr>\n                    </thead>\n                    <tbody>\n                        <tr v-for=\"item in mData\" v-bind:key=\"item.id\">\n                            <td>\n                                <div class=\"img-container\">\n                                    <img class=\"img-square\" v-bind:src=\"asset+'/'+item.image\" v-bind:alt=\"item.name\">\n                                </div>\n                            </td>\n                            <td> {{ item.name }} </td>\n                            <td> {{ getDate(item.created_at) }} </td>\n                            <td>\n                                <div class=\"btn-group\">\n                                    <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                        <i class=\"fas fa-edit\"></i>\n                                    </a>\n                                    <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                        <i class=\"fas fa-trash\"></i>\n                                    </a>\n                                </div>\n                            </td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n            <div class=\"alert alert-danger\" role=\"alert\" v-if=\"mData.length === 0 && stext === '' \">\n                <strong>\n                    No hay entradas disponibles, prueba escribiendo nuevas.\n                </strong>\n            </div>\n            <div class=\"alert alert-danger\" role=\"alert\" v-else-if=\"mData.length === 0 && stext !== '' \">\n                <strong>\n                    No se ha encontrado ninguna coincidencia para \"{{ stext}}\"\n                </strong> \n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 /* 174 */
@@ -64460,6 +64484,248 @@ module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-h
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_script__, __vue_template__
+var __vue_styles__ = {}
+__vue_script__ = __webpack_require__(183)
+if (Object.keys(__vue_script__).some(function (key) { return key !== "default" && key !== "__esModule" })) {
+  console.warn("[vue-loader] resources\\assets\\js\\components\\users\\User.vue: named exports in *.vue files are ignored.")}
+__vue_template__ = __webpack_require__(184)
+module.exports = __vue_script__ || {}
+if (module.exports.__esModule) module.exports = module.exports.default
+var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
+if (__vue_template__) {
+__vue_options__.template = __vue_template__
+}
+if (!__vue_options__.computed) __vue_options__.computed = {}
+Object.keys(__vue_styles__).forEach(function (key) {
+var module = __vue_styles__[key]
+__vue_options__.computed[key] = function () { return module }
+})
+if (false) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  var id = "_v-0c2ad41f/User.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, __vue_template__)
+  }
+})()}
+
+/***/ }),
+/* 183 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+// <template>
+//     <div>
+//         <div class="row">
+//             <div class="col-md-auto">
+//                 <h1 class="my-inline-block">Usuarios</h1>
+//             </div>
+//             <div class="col-md-auto">
+//                 <a href="#" @click="showForm = !showForm" class="btn btn-primary">
+//                     {{ showForm ? 'Ocultar' : 'Añadir nuevo' }}
+//                 </a>
+//             </div>
+//         </div>
+//         <transition name="fade">
+//             <div class="row justify-content-center" v-show="showForm">
+//                 <div class="col-md-8">
+//                     <div class="card">
+//                         <div class="card-header card-header-primary">
+//                             <h4 class="card-title">Añadir nuevo usuario</h4>
+//                             <p class="card-category">Complete los campos para crear un nuevo usuario</p>
+//                         </div>
+//                         <div class="card-body">
+//                             <form :action="action" id="userNew" method="POST">
+//                                 <input type="hidden" name="_token" :value="csrf">
+//                                 <div class="form-row">
+//                                     <div class="col">
+//                                         <div class="form-group">
+//                                             <label class="bmd-label-floating" for="formUsername">Nombre de usuario*</label>
+//                                             <input class="form-control" type="text" name="username" id="formUsername" v-model="username" required>
+//                                             <span class="bmd-help">
+//                                                 {{ isUsernameAvailable(username) ? '' : 'El nombre de usuario ya está en uso, elige otro'}}
+//                                             </span>
+//                                         </div>
+//                                     </div>
+//                                     <div class="col">
+//                                         <div class="form-group">
+//                                             <label class="bmd-label-floating" for="formEmail">Correo electrónico*</label>
+//                                             <input class="form-control" type="email" name="email" id="formEmail" v-model="email" required>
+//                                             <span class="bmd-help">
+//                                                 {{ isEmailAvailable(email) ? '' : 'El correo electrónico ya está en uso, elige otro'}}
+//                                             </span>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                                 <div class="form-row">
+//                                     <div class="col">
+//                                         <div class="form-group">
+//                                             <label class="bmd-label-floating" for="formName">Nombre</label>
+//                                             <input class="form-control" type="text" name="name" id="formName" value="">
+//                                         </div>
+//                                     </div>
+//                                     <div class="col">
+//                                         <div class="form-group">
+//                                             <label class="bmd-label-floating" for="formLastname">Apellido</label>
+//                                             <input class="form-control" type="text" name="lastname" id="formLastname" value="">
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                                 <div class="form-row justify-content-center">
+//                                     <div class="col">
+//                                         <div class="form-group row">
+//                                             <label class="col-md-3 col-form-label" for="formProfile">Perfil</label>
+//                                             <div class="col">
+//                                                 <select v-model="selected" class="form-control" name="profile" id="formProfile">
+//                                                     <option v-for="option in options" v-bind:value="option.value" :key="option.id">
+//                                                         {{option.text}}
+//                                                     </option>
+//                                                 </select>
+//                                             </div>
+//                                         </div>
+//                                     </div>
+//                                     <div class="col">
+//                                         <div class="form-group">
+//                                             <label class="bmd-label-floating" for="formPassword">Contraseña*</label>
+//                                             <input class="form-control" type="password" name="password" id="formPassword" value="" required>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                                 <button type="submit" class="btn btn-primary">Guardar</button>
+//                             </form>
+//                         </div>
+//                         <div class="card-footer">
+//                             <div class="stats">
+//                                 * Los campos marcados con el asterisco son obligatorios
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </transition>
+//         <div class="row justify-content">
+//             <div class="col md-auto">
+//                 <div class="card">
+//                     <div class="card-header card-header-success">
+//                         <h4 class="card-title">Lista de Usuarios</h4>
+//                         <p class="card-category">Todos los usuarios registrados en el sistema</p>
+//                     </div>
+//                     <div class="card-body">
+//                         <div class="table-responsive">
+//                             <table class="table table-shopping">
+//                                 <thead class="text-info text-center">
+//                                     <tr>
+//                                         <th>ID</th>
+//                                         <th>Usuario</th>
+//                                         <th>Perfil</th>
+//                                         <th>Nombre</th>
+//                                         <th>Apellido</th>
+//                                         <th>Correo</th>
+//                                         <th>Acciones</th>
+//                                     </tr>
+//                                 </thead>
+//                                 <tbody class="text-center">
+//                                     <tr v-for="user in users" :key="user.id">
+//                                         <th>{{user.id}}</th>
+//                                         <th>{{user.username}}</th>
+//                                         <th>{{getProfile(user.profile)}}</th>
+//                                         <th>{{user.name}}</th>
+//                                         <th>{{user.last_name}}</th>
+//                                         <th>{{user.email}}</th>
+//                                         <th>
+//                                             <div class="btn-group">
+//                                                 <a href="#" class="btn btn-round btn-info btn-sm">
+//                                                     <i class="fas fa-edit"></i>
+//                                                 </a>
+//                                                 <a href="#" class="btn btn-round btn-danger btn-sm">
+//                                                     <i class="fas fa-trash"></i>
+//                                                 </a>
+//                                             </div>
+//                                         </th>
+//                                     </tr>
+//                                 </tbody>
+//                             </table>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     </div>
+// </template>
+// <script>
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        users: Array,
+        url: String,
+        action: String
+    },
+    data: function data() {
+        return {
+            showForm: false,
+            selected: 'editor',
+            options: [{ text: 'Editor', value: 'editor' }, { text: 'Administrador', value: 'administrator' }],
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            username: '',
+            email: ''
+        };
+    },
+    computed: {
+        isAvailable: function isAvailable() {
+            return this.isUsernameAvailable(this.username);
+        }
+    },
+    methods: {
+        getProfile: function getProfile(string) {
+            switch (string) {
+                case 'administrator':
+                    return 'Administrador';
+                    break;
+                case 'editor':
+                    return 'Editor';
+                    break;
+                default:
+                    return 'Indefinido';
+            }
+        },
+        isUsernameAvailable: function isUsernameAvailable(string) {
+            var found = _.find(this.users, ['username', string]);
+            if (found === undefined) {
+                return true;
+            }
+            return false;
+        },
+        isEmailAvailable: function isEmailAvailable(string) {
+            var found = _.find(this.users, ['email', string]);
+            if (found === undefined) {
+                return true;
+            }
+            return false;
+        }
+    }
+    // </script>
+    //
+
+});
+
+/***/ }),
+/* 184 */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Usuarios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"showForm = !showForm\" class=\"btn btn-primary\">\n                {{ showForm ? 'Ocultar' : 'Añadir nuevo' }}\n            </a>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row justify-content-center\" v-show=\"showForm\">\n            <div class=\"col-md-8\">\n                <div class=\"card\">\n                    <div class=\"card-header card-header-primary\">\n                        <h4 class=\"card-title\">Añadir nuevo usuario</h4>\n                        <p class=\"card-category\">Complete los campos para crear un nuevo usuario</p>\n                    </div>\n                    <div class=\"card-body\">\n                        <form :action=\"action\" id=\"userNew\" method=\"POST\">\n                            <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                            <div class=\"form-row\">\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formUsername\">Nombre de usuario*</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"username\" id=\"formUsername\" v-model=\"username\" required>\n                                        <span class=\"bmd-help\">\n                                            {{ isUsernameAvailable(username) ? '' : 'El nombre de usuario ya está en uso, elige otro'}}\n                                        </span>\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formEmail\">Correo electrónico*</label>\n                                        <input class=\"form-control\" type=\"email\" name=\"email\" id=\"formEmail\" v-model=\"email\" required>\n                                        <span class=\"bmd-help\">\n                                            {{ isEmailAvailable(email) ? '' : 'El correo electrónico ya está en uso, elige otro'}}\n                                        </span>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"form-row\">\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formName\">Nombre</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"name\" id=\"formName\" value=\"\">\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formLastname\">Apellido</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"lastname\" id=\"formLastname\" value=\"\">\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"form-row justify-content-center\">\n                                <div class=\"col\">\n                                    <div class=\"form-group row\">\n                                        <label class=\"col-md-3 col-form-label\" for=\"formProfile\">Perfil</label>\n                                        <div class=\"col\">\n                                            <select v-model=\"selected\" class=\"form-control\" name=\"profile\" id=\"formProfile\">\n                                                <option v-for=\"option in options\" v-bind:value=\"option.value\" :key=\"option.id\">\n                                                    {{option.text}}\n                                                </option>\n                                            </select>\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formPassword\">Contraseña*</label>\n                                        <input class=\"form-control\" type=\"password\" name=\"password\" id=\"formPassword\" value=\"\" required>\n                                    </div>\n                                </div>\n                            </div>\n                            <button type=\"submit\" class=\"btn btn-primary\">Guardar</button>\n                        </form>\n                    </div>\n                    <div class=\"card-footer\">\n                        <div class=\"stats\">\n                            * Los campos marcados con el asterisco son obligatorios\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </transition>\n    <div class=\"row justify-content\">\n        <div class=\"col md-auto\">\n            <div class=\"card\">\n                <div class=\"card-header card-header-success\">\n                    <h4 class=\"card-title\">Lista de Usuarios</h4>\n                    <p class=\"card-category\">Todos los usuarios registrados en el sistema</p>\n                </div>\n                <div class=\"card-body\">\n                    <div class=\"table-responsive\">\n                        <table class=\"table table-shopping\">\n                            <thead class=\"text-info text-center\">\n                                <tr>\n                                    <th>ID</th>\n                                    <th>Usuario</th>\n                                    <th>Perfil</th>\n                                    <th>Nombre</th>\n                                    <th>Apellido</th>\n                                    <th>Correo</th>\n                                    <th>Acciones</th>\n                                </tr>\n                            </thead>\n                            <tbody class=\"text-center\">\n                                <tr v-for=\"user in users\" :key=\"user.id\">\n                                    <th>{{user.id}}</th>\n                                    <th>{{user.username}}</th>\n                                    <th>{{getProfile(user.profile)}}</th>\n                                    <th>{{user.name}}</th>\n                                    <th>{{user.last_name}}</th>\n                                    <th>{{user.email}}</th>\n                                    <th>\n                                        <div class=\"btn-group\">\n                                            <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                                <i class=\"fas fa-edit\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                                <i class=\"fas fa-trash\"></i>\n                                            </a>\n                                        </div>\n                                    </th>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ })
 /******/ ]);

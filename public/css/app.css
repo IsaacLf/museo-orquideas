@@ -21023,7 +21023,7 @@ table tr td > a {
 .isDisabled {
   cursor: none;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 1;
   text-decoration: none;
 }
 

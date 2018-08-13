@@ -16,23 +16,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-if="media.length === 0" >
-                                <td>
-                                    No hay elementos
-                                </td>
-                                <td>Para subir uno nuevo</td>
-                                <td>Pulsa el botón "añadir nuevo"</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a href="#" class="btn btn-round btn-info btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-round btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
                             <tr v-for="item in mData" v-bind:key="item.id">
                                 <td>
                                     <div class="img-container">
@@ -54,6 +37,16 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="alert alert-danger" role="alert" v-if="mData.length === 0 && stext === '' ">
+                    <strong>
+                        No hay entradas disponibles, prueba escribiendo nuevas.
+                    </strong>
+                </div>
+                <div class="alert alert-danger" role="alert" v-else-if="mData.length === 0 && stext !== '' ">
+                    <strong>
+                        No se ha encontrado ninguna coincidencia para "{{ stext}}"
+                    </strong> 
                 </div>
             </div>
         </div>

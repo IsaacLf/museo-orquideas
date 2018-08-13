@@ -26,6 +26,7 @@ Vue.component('entries', require('./components/Entries.vue'));
 Vue.component('media', require('./components/media/Media.vue'));
 Vue.component('media-list', require('./components/media/List.vue'));
 Vue.component('media-square', require('./components/media/Square.vue'));
+Vue.component('users', require('./components/users/User.vue'));
 
 const app = new Vue({
     el: '#app'
