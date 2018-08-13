@@ -5,7 +5,9 @@
                 <h1 class="my-inline-block">Biblioteca de medios</h1>
             </div>
             <div class="col-md-auto">
-                <a href="#" @click="flag = !flag" class="btn btn-warning">Añadir nuevo</a>
+                <a href="#" @click="flag = !flag" class="btn btn-warning">
+                    {{ flag ? 'Ocultar' : 'Añadir nuevo' }}
+                </a>
                 <transition name="slide-fade">
                     <input v-show="flag" class="btn btn-success" type="submit" value="Guardar" form="form"/>
                 </transition>

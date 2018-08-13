@@ -26,4 +26,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    /**
+     * get the Spanish string of the profile
+     * 
+     * @return string $string
+     */
+    public function getProfile(){
+        switch($this->profile){
+            case 'administrator':
+                return 'Administrador';
+                break;
+            case 'editor':
+                return 'Editor';
+                break;
+            default:
+                return 'No disponible';
+        }
+    }
 }

@@ -2,16 +2,24 @@
     <div>
         <div class="row justify-content mb-0">
             <div class="col md-auto">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0" style="background-color: white;">
-                        <li class="breadcrumb-item" v-bind:class="[{active: isAllSelected, isDisabled: isAllSelected}]">
-                            <a @click="isAllSelected = !isAllSelected" href="#">Todos ( {{ numEntry }} )</a>
-                        </li>
-                        <li class="breadcrumb-item" v-bind:class="[{active: !isAllSelected, isDisabled: !isAllSelected}]"> 
-                            <a @click="isAllSelected = !isAllSelected" href="#">Mios ( {{ numMine }} )</a>
-                        </li>
-                    </ol>
-                </nav>
+                <ul class="nav nav-pills nav-pills-icons nav-pills-primary nav-justify" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" @click="isAllSelected = true" href="#" v-bind:class="[{active: isAllSelected, isDisabled: isAllSelected}]" role="tab">
+                            <i class="fas fa-star"></i>
+                            Todos ( {{ numEntry }} )
+                        </a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" @click="isAllSelected = false" href="#" v-bind:class="[{active: !isAllSelected, isDisabled: !isAllSelected}]" role="tab">
+                            <i class="fas fa-user-check"></i>
+                            Mios ( {{ numMine }} )
+                        </a>
+                    </li>
+                    <form class="form-inline ml-2">
+                        <input class="form-control text-dark" type="search" placeholder="Buscar por título" size="50" aria-label="Search" v-model="stext">
+                    </form>
+                </ul>
+
             </div>
         </div>
         <div class="row justify-content">
@@ -24,17 +32,17 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-shopping">
-                                <thead class="text-info">
+                                <thead class="text-info text-center">
                                     <tr>
                                         <th>ID</th>
                                         <th>Título</th>
-                                        <th>Autor</th>
+                                        <th :class="{'text-warning': !isAllSelected}">Autor</th>
                                         <th>Fecha</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr v-for="entry in data" v-bind:key="entry.id">
+                                <tbody class="text-center">
+                                    <tr v-for="entry in aData" v-bind:key="entry.id">
                                         <td>{{entry.id}}</td>
                                         <td><a v-bind:href="url+'/'+entry.id">{{ entry.title }}</a></td>
                                         <td>{{ entry.author }}</td>
@@ -55,6 +63,16 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="alert alert-danger" role="alert" v-if="aData.length === 0 && stext === '' ">
+                            <strong>
+                                No hay entradas disponibles, prueba escribiendo nuevas.
+                            </strong>
+                        </div>
+                        <div class="alert alert-danger" role="alert" v-else-if="aData.length === 0 && stext !== '' ">
+                            <strong>
+                                No se ha encontrado ninguna coincidencia para "{{ stext }}"
+                            </strong> 
                         </div>
                     </div>
                 </div>
@@ -78,18 +96,19 @@ export default {
             numEntry: JSON.parse(this.entry),
             numMine: JSON.parse(this.mine),
             isAllSelected: true,
-            myEntries: []
+            myEntries: [],
+            stext: ''
         }
     },
     created: function(){
         this.getUserEntries();
     },
     computed: {
-        data: function(){
+        aData: function(){
             if(this.isAllSelected){
-                return this.entries;
+                return this.getFiltered(this.entries);
             }else{
-                return this.myEntries;
+                return this.getFiltered(this.myEntries);
             }
         },
         Title: function(){
@@ -113,6 +132,15 @@ export default {
         },
         getDate: function(value){
             return moment(value).locale('es').format("llll");
+        },
+        getFiltered: function(array){
+            var text = this.stext;
+            if(text === ''){
+                return array;
+            }
+            return _.filter(array, function(obj){
+                return (_.includes(_.toLower(obj.title), _.toLower(text)));
+            });
         }
     }
 }

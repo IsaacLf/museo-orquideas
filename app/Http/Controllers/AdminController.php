@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Entry;
 use App\Media;
+use App\User;
 use Auth;
 
 class AdminController extends Controller
@@ -47,7 +48,8 @@ class AdminController extends Controller
      * @return Illuminate\Http\Response
      */
     public function users(){
-        return view('admin.users');
+        $users = User::all();
+        return view('admin.users', ['users' => $users]);
     }
 
 }

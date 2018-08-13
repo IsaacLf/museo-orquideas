@@ -21,7 +21,7 @@
                     @if(Auth::user()->profile == 'administrator')
                     <p class="card-text">
                         <i class="fas fa-user"></i>
-                        <a href="#!">{{ App\User::count() }} usuario(s)</a>
+                        <a href="{{ url('/users') }}">{{ App\User::count() }} usuario(s)</a>
                     </p>
                     @endif
                 </div>

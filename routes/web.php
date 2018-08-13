@@ -24,3 +24,4 @@ Route::get('/upload', 'Admincontroller@upload')->name('upload');
 Route::get('/users', 'Admincontroller@users')->name('users')->middleware('admin');
 
 Route::post('/media/upload-new',  'MediaController@uploadImage');
+Route::post('/users/create','UserController@store');
