@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Document</title>
+    <title>orquideas</title>
+ 
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous"> -->
+    <link href="{{ asset('css/fa/css/all.css') }}" rel="stylesheet">
+
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.css') }}" rel="stylesheet" type="text/css">
@@ -22,7 +29,7 @@
 
 <div id="app">
   <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-12"  style="text-align: center">
       <div class="col-lg-10">
         <div class="panel panel-default">
             <h4><center><div class="panel-heading"></div></center></h4>
@@ -56,7 +63,8 @@
 
 
 <form>
-<table>
+
+<table style="overflow-x:auto;" style="text-align:center;">
   
   <tbody><tr>
     <td>Titulo:</td>
@@ -71,7 +79,7 @@
     <td>{{$entry->distribution}}</td>
   </tr>
   <tr>
-    <td>Descrpcion</td>
+    <td>Descrpcion:</td>
     <td>{{$entry->description}}</td>
   </tr>
 </tbody></table>
@@ -92,5 +100,12 @@
         <p><strong>Hacienda Teya, Kanasin, Yucatan, Mexico</strong></p>
         <p><strong>SEMARNAT-UMA-VIV-0163-YUC-09</strong></p>
 </div>
+  
+   <!-- Scripts -->
+   <link href="{{ asset('css/fa/js/all.js') }}" rel="stylesheet">
+   <script src="{{ asset('js/plupload.js') }}"></script>
+   <script src="{{ asset('js/material-dasboard.js') }}"></script>
+    @yield('scripts')
+
 </body>
 </html>
