@@ -18411,7 +18411,7 @@ var __vue_script__, __vue_template__
 var __vue_styles__ = {}
 __vue_script__ = __webpack_require__(165)
 if (Object.keys(__vue_script__).some(function (key) { return key !== "default" && key !== "__esModule" })) {
-  console.warn("[vue-loader] resources\\assets\\js\\components\\Entries.vue: named exports in *.vue files are ignored.")}
+  console.warn("[vue-loader] resources\\assets\\js\\components\\entries\\Entries.vue: named exports in *.vue files are ignored.")}
 __vue_template__ = __webpack_require__(167)
 module.exports = __vue_script__ || {}
 if (module.exports.__esModule) module.exports = module.exports.default
@@ -18428,7 +18428,7 @@ if (false) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
-  var id = "_v-4c9e5c40/Entries.vue"
+  var id = "_v-8eed8218/Entries.vue"
   if (!module.hot.data) {
     hotAPI.createRecord(id, module.exports)
   } else {
@@ -30286,7 +30286,7 @@ if (false) {(function () {  module.hot.accept()
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(138);
-module.exports = __webpack_require__(177);
+module.exports = __webpack_require__(183);
 
 
 /***/ }),
@@ -30321,7 +30321,8 @@ Vue.component('entries', __webpack_require__(13));
 Vue.component('media', __webpack_require__(168));
 Vue.component('media-list', __webpack_require__(171));
 Vue.component('media-square', __webpack_require__(174));
-Vue.component('users', __webpack_require__(182));
+Vue.component('users', __webpack_require__(177));
+Vue.component('image-picker', __webpack_require__(180));
 
 var app = new Vue({
   el: '#app'
@@ -64481,24 +64482,14 @@ module.exports = "\n<div>\n    <div class=\"card\">\n        <div class=\"card-h
 
 /***/ }),
 /* 177 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_script__, __vue_template__
 var __vue_styles__ = {}
-__vue_script__ = __webpack_require__(183)
+__vue_script__ = __webpack_require__(178)
 if (Object.keys(__vue_script__).some(function (key) { return key !== "default" && key !== "__esModule" })) {
   console.warn("[vue-loader] resources\\assets\\js\\components\\users\\User.vue: named exports in *.vue files are ignored.")}
-__vue_template__ = __webpack_require__(184)
+__vue_template__ = __webpack_require__(179)
 module.exports = __vue_script__ || {}
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -64523,7 +64514,7 @@ if (false) {(function () {  module.hot.accept()
 })()}
 
 /***/ }),
-/* 183 */
+/* 178 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64722,10 +64713,129 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 184 */
+/* 179 */
 /***/ (function(module, exports) {
 
 module.exports = "\n<div>\n    <div class=\"row\">\n        <div class=\"col-md-auto\">\n            <h1 class=\"my-inline-block\">Usuarios</h1>\n        </div>\n        <div class=\"col-md-auto\">\n            <a href=\"#\" @click=\"showForm = !showForm\" class=\"btn btn-primary\">\n                {{ showForm ? 'Ocultar' : 'Añadir nuevo' }}\n            </a>\n        </div>\n    </div>\n    <transition name=\"fade\">\n        <div class=\"row justify-content-center\" v-show=\"showForm\">\n            <div class=\"col-md-8\">\n                <div class=\"card\">\n                    <div class=\"card-header card-header-primary\">\n                        <h4 class=\"card-title\">Añadir nuevo usuario</h4>\n                        <p class=\"card-category\">Complete los campos para crear un nuevo usuario</p>\n                    </div>\n                    <div class=\"card-body\">\n                        <form :action=\"action\" id=\"userNew\" method=\"POST\">\n                            <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n                            <div class=\"form-row\">\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formUsername\">Nombre de usuario*</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"username\" id=\"formUsername\" v-model=\"username\" required>\n                                        <span class=\"bmd-help\">\n                                            {{ isUsernameAvailable(username) ? '' : 'El nombre de usuario ya está en uso, elige otro'}}\n                                        </span>\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formEmail\">Correo electrónico*</label>\n                                        <input class=\"form-control\" type=\"email\" name=\"email\" id=\"formEmail\" v-model=\"email\" required>\n                                        <span class=\"bmd-help\">\n                                            {{ isEmailAvailable(email) ? '' : 'El correo electrónico ya está en uso, elige otro'}}\n                                        </span>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"form-row\">\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formName\">Nombre</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"name\" id=\"formName\" value=\"\">\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formLastname\">Apellido</label>\n                                        <input class=\"form-control\" type=\"text\" name=\"lastname\" id=\"formLastname\" value=\"\">\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"form-row justify-content-center\">\n                                <div class=\"col\">\n                                    <div class=\"form-group row\">\n                                        <label class=\"col-md-3 col-form-label\" for=\"formProfile\">Perfil</label>\n                                        <div class=\"col\">\n                                            <select v-model=\"selected\" class=\"form-control\" name=\"profile\" id=\"formProfile\">\n                                                <option v-for=\"option in options\" v-bind:value=\"option.value\" :key=\"option.id\">\n                                                    {{option.text}}\n                                                </option>\n                                            </select>\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"col\">\n                                    <div class=\"form-group\">\n                                        <label class=\"bmd-label-floating\" for=\"formPassword\">Contraseña*</label>\n                                        <input class=\"form-control\" type=\"password\" name=\"password\" id=\"formPassword\" value=\"\" required>\n                                    </div>\n                                </div>\n                            </div>\n                            <button type=\"submit\" class=\"btn btn-primary\">Guardar</button>\n                        </form>\n                    </div>\n                    <div class=\"card-footer\">\n                        <div class=\"stats\">\n                            * Los campos marcados con el asterisco son obligatorios\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </transition>\n    <div class=\"row justify-content\">\n        <div class=\"col md-auto\">\n            <div class=\"card\">\n                <div class=\"card-header card-header-success\">\n                    <h4 class=\"card-title\">Lista de Usuarios</h4>\n                    <p class=\"card-category\">Todos los usuarios registrados en el sistema</p>\n                </div>\n                <div class=\"card-body\">\n                    <div class=\"table-responsive\">\n                        <table class=\"table table-shopping\">\n                            <thead class=\"text-info text-center\">\n                                <tr>\n                                    <th>ID</th>\n                                    <th>Usuario</th>\n                                    <th>Perfil</th>\n                                    <th>Nombre</th>\n                                    <th>Apellido</th>\n                                    <th>Correo</th>\n                                    <th>Acciones</th>\n                                </tr>\n                            </thead>\n                            <tbody class=\"text-center\">\n                                <tr v-for=\"user in users\" :key=\"user.id\">\n                                    <th>{{user.id}}</th>\n                                    <th>{{user.username}}</th>\n                                    <th>{{getProfile(user.profile)}}</th>\n                                    <th>{{user.name}}</th>\n                                    <th>{{user.last_name}}</th>\n                                    <th>{{user.email}}</th>\n                                    <th>\n                                        <div class=\"btn-group\">\n                                            <a href=\"#\" class=\"btn btn-round btn-info btn-sm\">\n                                                <i class=\"fas fa-edit\"></i>\n                                            </a>\n                                            <a href=\"#\" class=\"btn btn-round btn-danger btn-sm\">\n                                                <i class=\"fas fa-trash\"></i>\n                                            </a>\n                                        </div>\n                                    </th>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_script__, __vue_template__
+var __vue_styles__ = {}
+__vue_script__ = __webpack_require__(181)
+if (Object.keys(__vue_script__).some(function (key) { return key !== "default" && key !== "__esModule" })) {
+  console.warn("[vue-loader] resources\\assets\\js\\components\\entries\\ImagePicker.vue: named exports in *.vue files are ignored.")}
+__vue_template__ = __webpack_require__(182)
+module.exports = __vue_script__ || {}
+if (module.exports.__esModule) module.exports = module.exports.default
+var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
+if (__vue_template__) {
+__vue_options__.template = __vue_template__
+}
+if (!__vue_options__.computed) __vue_options__.computed = {}
+Object.keys(__vue_styles__).forEach(function (key) {
+var module = __vue_styles__[key]
+__vue_options__.computed[key] = function () { return module }
+})
+if (false) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  var id = "_v-39519dad/ImagePicker.vue"
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, __vue_template__)
+  }
+})()}
+
+/***/ }),
+/* 181 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+// <template>
+//     <div>
+//         <div class="card bg-dark">
+//             <div class="card-header mb-2">
+//                 <h6 class="card-title"><strong>Imagen destacada</strong></h6> 
+//             </div>
+//             <div class="card-body mb-4">
+//                 <!-- Modal -->
+//                 <div class="modal fade" id="elegirImagen" tabindex="-1" role="dialog" aria-labelledby="elegirImagenLabel" aria-hidden="true">
+//                     <div class="modal-dialog modal-lg" role="document">
+//                         <div class="modal-content">
+//                             <div class="modal-header text-muted">
+//                                 <h5 class="modal-title" id="elegirImagenLabel">Seleccione o suba alguna imagen</h5>
+//                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+//                                 <span aria-hidden="true">&times;</span>
+//                                 </button>
+//                             </div>
+//                             <div class="modal-body text-dark">
+//                                 <div class="img-group fixed-height">
+//                                     <img v-for="image in images" :key="image.id" :src="asset+'/'+image.image" :alt="image.name" class="img-item">
+//                                 </div>
+//                                 <hr>
+//                                 <div class="text-center">
+//                                     <div class="upload-btn-wrapper">
+//                                         <button class="btn btn-info">
+//                                             <i class="fas fa-file-image"></i>
+//                                             <strong>Subir una imagen</strong>
+//                                         </button>
+//                                         <input type="file" class="btn btn-secondary" id="image">
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                             <div class="modal-footer">
+//                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+//                                 <button type="button" class="btn btn-primary">Aceptar</button>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <!-- End Modal -->
+//                 <div class="mt-2">
+//                     <button class="btn btn-secondary" role="button" data-toggle="modal" data-target="#elegirImagen">
+//                         <i class="fas fa-image"></i>
+//                         Establecer imagen
+//                     </button>
+//                 </div>
+//             </div>
+//             <div v-if="entry.image != null" class="card-avatar">
+//                 <img :src="asset + '/' + entry.image + entry.imageType" :alt="entry.title" class="img img-resize">
+//             </div>
+//         </div>
+//     </div>
+// </template>
+// <script>
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        images: Array,
+        entry: {},
+        asset: String
+    },
+    dta: function dta() {
+        return {};
+    },
+    methods: {}
+    // </script>
+
+});
+
+/***/ }),
+/* 182 */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div>\n    <div class=\"card bg-dark\">\n        <div class=\"card-header mb-2\">\n            <h6 class=\"card-title\"><strong>Imagen destacada</strong></h6> \n        </div>\n        <div class=\"card-body mb-4\">\n            <!-- Modal -->\n            <div class=\"modal fade\" id=\"elegirImagen\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"elegirImagenLabel\" aria-hidden=\"true\">\n                <div class=\"modal-dialog modal-lg\" role=\"document\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header text-muted\">\n                            <h5 class=\"modal-title\" id=\"elegirImagenLabel\">Seleccione o suba alguna imagen</h5>\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                            <span aria-hidden=\"true\">&times;</span>\n                            </button>\n                        </div>\n                        <div class=\"modal-body text-dark\">\n                            <div class=\"img-group fixed-height\">\n                                <img v-for=\"image in images\" :key=\"image.id\" :src=\"asset+'/'+image.image\" :alt=\"image.name\" class=\"img-item\">\n                            </div>\n                            <hr>\n                            <div class=\"text-center\">\n                                <div class=\"upload-btn-wrapper\">\n                                    <button class=\"btn btn-info\">\n                                        <i class=\"fas fa-file-image\"></i>\n                                        <strong>Subir una imagen</strong>\n                                    </button>\n                                    <input type=\"file\" class=\"btn btn-secondary\" id=\"image\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"modal-footer\">\n                            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Cerrar</button>\n                            <button type=\"button\" class=\"btn btn-primary\">Aceptar</button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <!-- End Modal -->\n            <div class=\"mt-2\">\n                <button class=\"btn btn-secondary\" role=\"button\" data-toggle=\"modal\" data-target=\"#elegirImagen\">\n                    <i class=\"fas fa-image\"></i>\n                    Establecer imagen\n                </button>\n            </div>\n        </div>\n        <div v-if=\"entry.image != null\" class=\"card-avatar\">\n            <img :src=\"asset + '/' + entry.image + entry.imageType\" :alt=\"entry.title\" class=\"img img-resize\">\n        </div>\n    </div>\n</div>\n";
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

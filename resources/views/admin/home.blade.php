@@ -43,6 +43,7 @@
                                 <li>
                                     <span class="text-muted">{{ $entry->updated_at }}</span>
                                     <a href="{{ url('entries/'.$entry->id.'/edit') }}">{{ $entry->title }}</a>
+                                    <span class="badge badge-pill badge-secondary">Nuevo</span>
                                 </li>
                                 @endif
                             @endif

@@ -19,6 +19,10 @@
         <p>{{ $url }}</p>
         <hr>
         <h1>jQuery UI Widget</h1>
+        <!-- Esto es exactamente el ejemplo -->
+        {!! QrCode::size(300)->margin(0.5)->generate(Request::url()); !!}
+        <p>Escanéame para volver a la página principal.</p>
+        <!-- Aquí termina el ejemplo -->
         <p>You can see this example with different themes on the <a href="http://plupload.com/example_jquery_ui.php">www.plupload.com</a> website.</p>
 
         <form id="form" method="post" action="/echo/json">

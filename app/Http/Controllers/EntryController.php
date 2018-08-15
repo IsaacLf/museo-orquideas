@@ -8,7 +8,9 @@ use Storage;
 use App\Entry;
 use App\Media;
 use App\Http\Resources\Entry as EntryResource;
+use Carbon\Carbon as Carbon;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator as QRCode;
 
 class EntryController extends Controller
 {
@@ -58,8 +60,8 @@ class EntryController extends Controller
         $entry->distribution = $request->distribution;
         $entry->description = $request->description;
         $entry->author = Auth::user()->username;
-        $time = Carbon\Carbon::now('d-m-Y');
         if( $request->hasFile( 'image' ) ) {
+            $time = Carbon::now('d-m-Y');
             $imgExtension = $request->file('image')->getClientOriginalExtension();
             $image = $request->file('image')->getRealPath();
             // $imageResize = Image::make($image)->resize(300,300);
@@ -92,8 +94,10 @@ class EntryController extends Controller
      */
     public function show(Entry $entry, Request $request)
     {
+        $qrcode = new QRCode;
+        $qrcode->size(300)->generate('Crea un QR Sin Laravel');
         $url = $request->fullUrl();
-       return view('admin.entries.show', ["entry" => $entry, "url" => $url]);
+        return view('admin.entries.show', ["entry" => $entry, "url" => $url, "qrcode" => $qrcode]);
     }
 
     /**
