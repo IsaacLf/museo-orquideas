@@ -18,12 +18,6 @@
     <link href="{{ asset('css/all.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div id="header">
-  <img align="left" src="#" height="100px">
-  <img align="right" src="#" height="100px"><br></br>
-  </div>
-  <hr>
-</body>
 
 <body>
 
