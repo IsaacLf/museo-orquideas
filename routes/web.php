@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::resource('entries', 'EntryController');
 Route::resource('media', 'MediaController');
 Auth::routes();
@@ -24,3 +25,9 @@ Route::get('/upload', 'Admincontroller@upload')->name('upload');
 Route::get('/users', 'Admincontroller@users')->name('users')->middleware('admin');
 
 Route::post('/media/upload-new',  'MediaController@uploadImage');
+Route::post('/users/create','UserController@store');
+
+Route::get('/QR','QrController@generate');
+
+Route::get('entries/generate/{id}','QrController@generateUrl');
+
