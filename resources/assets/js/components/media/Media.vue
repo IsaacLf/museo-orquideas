@@ -51,7 +51,13 @@
         </nav>
         <div class="container-fluid">
             <transition name="component-fade" mode="out-in">
-                <component v-bind:is="currentComponent" :media="media" :asset="asset" :stext="stext"></component>
+                <component 
+                v-bind:is="currentComponent" 
+                :media="Media" 
+                :asset="asset" 
+                :stext="stext"
+                v-on:call-api="fetchMedia"
+                ></component>
             </transition>
         </div>
     </div>
@@ -59,12 +65,13 @@
 <script>
 export default {
     props: {
-        media: {},
-        asset: {},
-        action: {},
+        media: Array,
+        asset: String,
+        action: String,
     },
     created: function(){
         this.initForm();
+        this.Media = this.media;
     },
     data () {
         return {
@@ -72,7 +79,8 @@ export default {
         flag: false,
         search: false,
         stext: '',
-        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        Media: []
         }
     },
     computed: {
@@ -88,6 +96,14 @@ export default {
             }else{
                 this.search = false;
             }
+        },
+        fetchMedia: function(){
+            var vm = this;
+            fetch('api/media')
+            .then(res => res.json())
+            .then(res => {
+                vm.Media = res.data;
+            });
         },
         initForm: function(){
             $(document).ready(function() {
@@ -113,7 +129,7 @@ export default {
                     // User can upload no more then 20 files in one go (sets multiple_queues to false)
                     max_file_count: 20,
                     
-                    chunk_size: '1mb',
+                    chunk_size: '10mb',
 
                     // Resize images on clientside if we can
                     // resize : {

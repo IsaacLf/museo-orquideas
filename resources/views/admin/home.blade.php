@@ -16,12 +16,16 @@
                 <div class="card-body">
                     <p class="card-text">
                         <i class="fas fa-thumbtack"></i>
-                        <a href="{{ url('edit') }}">{{ App\Entry::count() }} entrada(s)</a>
+                        <a href="{{ url('edit') }}">
+                            <strong> {{ App\Entry::count() }} ENTRADA (s) </strong>
+                        </a>
                     </p>
                     @if(Auth::user()->profile == 'administrator')
                     <p class="card-text">
                         <i class="fas fa-user"></i>
-                        <a href="{{ url('/users') }}">{{ App\User::count() }} usuario(s)</a>
+                        <a href="{{ url('/users') }}">
+                            <strong> {{ App\User::count() }} USUARIO (s) </strong>
+                        </a>
                     </p>
                     @endif
                 </div>
@@ -43,7 +47,7 @@
                                 <li>
                                     <span class="text-muted">{{ $entry->updated_at }}</span>
                                     <a href="{{ url('entries/'.$entry->id.'/edit') }}">{{ $entry->title }}</a>
-                                    <span class="badge badge-pill badge-secondary">Nuevo</span>
+                                    <span class="badge badge-pill badge-secondary">Modificado</span>
                                 </li>
                                 @endif
                             @endif

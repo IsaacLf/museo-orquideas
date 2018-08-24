@@ -21028,8 +21028,10 @@ table tr td > a {
 }
 
 .img-resize {
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 100%;
-  height: auto;
+  height: 165px;
   border-radius: 8px;
 }
 
@@ -21046,6 +21048,9 @@ div.img-group > img.img-item {
   border-radius: 4px;
   padding-left: 3px;
   padding-bottom: 3px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 div.img-group-8 > img.img-item {
@@ -21056,6 +21061,38 @@ div.img-group-8 > img.img-item {
   border-radius: 4px;
   padding-left: 5px;
   padding-bottom: 3px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.my-column {
+  position: relative;
+  float: left;
+  width: calc( (1/8) * 100%);
+  height: 120px;
+  border-radius: 4px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+}
+
+[class~="my-column"] img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.my-column.n {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+div.img-group > img.img-item:hover,
+div.img-group-8 > img.img-item:hover {
+  opacity: 0.7;
 }
 
 img.img-square {
@@ -21085,6 +21122,20 @@ img.img-square {
   left: 0;
   top: 0;
   opacity: 0;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper input#image[type=file][class=myfile] {
+  font-size: 7px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  height: 100px;
 }
 
 .fade-enter-active,
@@ -21130,7 +21181,129 @@ img.img-square {
   opacity: 0;
 }
 
-.modal-open .modal {
-  overflow-y: auto;
+/* Modal styles for Vue Modal component */
+
+.vue-modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+}
+
+.vue-modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.vue-modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.vue-modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.vue-modal-body {
+  margin: 20px 0;
+}
+
+.vue-modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.vue-modal-enter {
+  opacity: 0;
+}
+
+.vue-modal-leave-active {
+  opacity: 0;
+}
+
+.vue-modal-enter .vue-modal-container,
+.vue-modal-leave-active .vue-modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.my-overlay {
+  position: absolute;
+  float: left;
+  top: -1px;
+  right: 2px;
+  left: 2px;
+  bottom: -1px;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  opacity: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  background-color: black;
+}
+
+.my-column.n .my-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  right: 0px;
+  left: 4px;
+  bottom: -1px;
+  border-radius: 15%;
+  opacity: 0;
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+  background-color: black;
+}
+
+.my-column:hover [class~="my-overlay"] {
+  opacity: 0.9;
+}
+
+a.icon {
+  font-size: 35px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+a.icon .fa-trash:hover {
+  color: #a50101;
+}
+
+a.icon .fa-edit:hover {
+  color: #01a54b;
 }
 

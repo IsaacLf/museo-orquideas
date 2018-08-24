@@ -52,7 +52,7 @@
                                                 <a :href="url+'/'+entry.id+'/edit'" class="btn btn-round btn-info btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-round btn-danger btn-sm">
+                                                <a @click="deleteEntry(entry.id)" href="#" class="btn btn-round btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-round btn-warning btn-sm">
@@ -83,32 +83,38 @@
 <script>
 import Entries from './Entries.vue'
 import moment from 'moment'
+import swal from 'sweetalert'
 export default {
     props: {
         entry: {},
         mine: {},
         entries: {},
         user: {},
-        url: {}
+        url: String
     },
     data (){
         return {
-            numEntry: JSON.parse(this.entry),
-            numMine: JSON.parse(this.mine),
             isAllSelected: true,
+            Entries: [],
             myEntries: [],
             stext: ''
         }
     },
     created: function(){
+        this.Entries = this.entries;
         this.getUserEntries();
     },
     computed: {
-        aData: function(){
-            if(this.isAllSelected){
-                return this.getFiltered(this.entries);
-            }else{
-                return this.getFiltered(this.myEntries);
+        aData:{
+            get: function(){
+                if(this.isAllSelected){
+                    return this.getFiltered(this.Entries);
+                }else{
+                    return this.getFiltered(this.myEntries);
+                }
+            },
+            set: function(array){
+                this.myEntries = _.filter(this.array,['author', this.user.username])
             }
         },
         Title: function(){
@@ -124,11 +130,17 @@ export default {
             }else{
                 return 'Todas las entradas escritas por mi';
             }
+        },
+        numEntry: function(){
+            return this.Entries.length;
+        },
+        numMine: function(){
+            return this.myEntries.length;
         }
     },
     methods: {
         getUserEntries: function(){
-            this.myEntries = _.filter(this.entries,['author', this.user.username]);
+            this.myEntries = _.filter(this.Entries,['author', this.user.username]);
         },
         getDate: function(value){
             return moment(value).locale('es').format("llll");
@@ -141,6 +153,45 @@ export default {
             return _.filter(array, function(obj){
                 return (_.includes(_.toLower(obj.title), _.toLower(text)));
             });
+        },
+        deleteEntry: function(eID){
+            var vm = this;
+            swal({
+                title: "¿Desea eliminar esta entrada?",
+                text: "¿Está seguro? !No será capaz de revertir esto!",
+                icon: "warning",
+                buttons: ["Cancelar","Sí, ¡Elimínalo!"],
+                closeModal: true,
+                dangerMode: true
+            }).then((result) => { // <--
+                if (result) { // <-- if confirmed
+                    fetch('api/entries/' + eID, {method: 'delete'})
+                    .then(res => res.json())
+                    .then(data => {
+                        swal(
+                            "Entrada eliminada correctamente",
+                            {icon: 'success',
+                             timer: 3000}
+                        );
+                        vm.fetchEntries();
+                    })
+                    .catch(err => console.log(err));
+                    
+                }
+            });
+        },
+        fetchEntries: function(){
+            var vm = this;
+            fetch('api/entries')
+            .then(res => res.json())
+            .then(res => {
+                vm.updateEntries(res.data);
+            });
+        },
+        updateEntries: function(array){
+            let vm = this;
+            vm.Entries = array;
+            vm.myEntries = _.filter(array,['author', vm.user.username]);
         }
     }
 }
