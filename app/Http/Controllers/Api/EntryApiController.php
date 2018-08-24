@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Entry;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Entry as EntryResource;
 
 class EntryApiController extends Controller
@@ -16,7 +17,7 @@ class EntryApiController extends Controller
     public function index()
     {
         //
-        $entries = Entry::paginate(15);
+        $entries = Entry::all();
         return EntryResource::collection($entries);
     }
 
@@ -58,8 +59,10 @@ class EntryApiController extends Controller
     public function show(Entry $entry)
     {
         //
+        dump($entry);
+        exit;
         $nentry = Entry::findOrFail($entry->id);
-        return new EntryResource($nentry);
+        return new EntryResource($entry);
     }
 
     /**

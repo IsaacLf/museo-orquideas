@@ -38,13 +38,13 @@
                     <ul class="nav">
                         <li class="nav-item {{ (Request::is('index') ? 'active' : '' ) }}">
                             <a class="nav-link" href="{{ url('/index') }}">
-                                <i class="fas fa-tasks"></i>
+                                <i class="fas fa-newspaper"></i>
                                 <p>Inicio</p>
                             </a>
                         </li>
                         <li class="nav-item {{ (Request::is('edit') ? 'active' : (Request::is('entries/create')) ? 'active' : (Request::is('entries/*/edit')) ? 'active' : '' ) }}">
                             <a class="nav-link" href="{{ url('/edit') }}">
-                                <i class="fas fa-newspaper"></i>
+                                <i class="fas fa-list-ol"></i>
                                 <p>Entradas</p>
                             </a>
                         </li>

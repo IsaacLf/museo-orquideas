@@ -38,18 +38,18 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         if( $request->hasFile( 'file' ) ) {
-            $time = Carbon::now('America/Merida')->format('d-m-Y');
+            $time = Carbon::now('America/Merida')->format('d-m-Y_H-i-s');
             $imgExtension = $request->file('file')->getClientOriginalExtension();
             $image = $request->file('file')->getRealPath();
-            $imgName = $request->file('file')->getClientOriginalName();
+            $imgName = explode('.',$request->file('file')->getClientOriginalName());
             // $imageResize = Image::make($image)->resize(300,300);
             Storage::put(
-                'public/media/'.$time.$imgName,
+                'public/media/'.$time.$imgName[0].'.'.$imgExtension,
                 file_get_contents($image)
             );
             $media = new Media;
-            $media->name = $imgName;
-            $media->image = $time.$imgName;
+            $media->name = $imgName[0];
+            $media->image = $time.$imgName[0];
             $media->imageType = '.'.$imgExtension;
             if($media->save()){
                 return response()->json([

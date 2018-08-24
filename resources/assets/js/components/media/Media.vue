@@ -5,7 +5,9 @@
                 <h1 class="my-inline-block">Biblioteca de medios</h1>
             </div>
             <div class="col-md-auto">
-                <a href="#" @click="flag = !flag" class="btn btn-warning">Añadir nuevo</a>
+                <a href="#" @click="flag = !flag" class="btn btn-warning">
+                    {{ flag ? 'Ocultar' : 'Añadir nuevo' }}
+                </a>
                 <transition name="slide-fade">
                     <input v-show="flag" class="btn btn-success" type="submit" value="Guardar" form="form"/>
                 </transition>
@@ -40,15 +42,22 @@
                         </a>
                     </li>
                 </ul>
-                <form class="form-inline">
-                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
-                </form>
+                <transition name="fade">
+                    <form class="form-inline" v-show="search">
+                        <input class="form-control text-white" type="search" placeholder="Buscar" aria-label="Search" v-model="stext">
+                    </form>
+                </transition>
             </div>
         </nav>
         <div class="container-fluid">
             <transition name="component-fade" mode="out-in">
-                <component v-bind:is="currentComponent" :media="media" :asset="asset"></component>
+                <component 
+                v-bind:is="currentComponent" 
+                :media="Media" 
+                :asset="asset" 
+                :stext="stext"
+                v-on:call-api="fetchMedia"
+                ></component>
             </transition>
         </div>
     </div>
@@ -56,18 +65,22 @@
 <script>
 export default {
     props: {
-        media: {},
-        asset: {},
-        action: {},
+        media: Array,
+        asset: String,
+        action: String,
     },
     created: function(){
         this.initForm();
+        this.Media = this.media;
     },
     data () {
         return {
         currentLink: 'square',
         flag: false,
-        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        search: false,
+        stext: '',
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        Media: []
         }
     },
     computed: {
@@ -78,6 +91,19 @@ export default {
     methods: {
         setCurrent: function(string){
             this.currentLink = string;
+            if(string === 'list'){
+                this.search = true;
+            }else{
+                this.search = false;
+            }
+        },
+        fetchMedia: function(){
+            var vm = this;
+            fetch('api/media')
+            .then(res => res.json())
+            .then(res => {
+                vm.Media = res.data;
+            });
         },
         initForm: function(){
             $(document).ready(function() {
@@ -103,15 +129,15 @@ export default {
                     // User can upload no more then 20 files in one go (sets multiple_queues to false)
                     max_file_count: 20,
                     
-                    chunk_size: '1mb',
+                    chunk_size: '10mb',
 
                     // Resize images on clientside if we can
-                    resize : {
-                        width: 200, 
-                        height: 200, 
-                        quality: 90,
-                        crop: true // crop to exact dimensions
-                    },
+                    // resize : {
+                    //     width: 200, 
+                    //     height: 200, 
+                    //     quality: 90,
+                    //     crop: true // crop to exact dimensions
+                    // },
 
                     // Specify what files to browse for
                     filters: [
@@ -140,7 +166,7 @@ export default {
                 //This was added by me ~Victor~ to Change the language of the showed up text, so it can be in spanish
                 $(document).ready(function() {
                     $('.plupload_header_title').text('Selecciona tus archivos');
-                    $('.plupload_header_text').text('Añade archivos a la cola y luego da click en el botón \'Iniciar carga\'');
+                    $('.plupload_header_text').text('Añade archivos a la cola y luego da click en el botón \'Iniciar carga\' o en el botón Guardar');
                     $('div.plupload_droptext').text('Arrastra archivos aquí');
                     $('a#uploader_browse >.ui-button-text').text('Añadir archivos');
                     $('a#uploader_start >.ui-button-text').text('Iniciar carga');

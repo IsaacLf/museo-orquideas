@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Storage as Storage;
+use Illuminate\Filesystem\Filesystem;
 
 class CreateMediaTable extends Migration
 {
@@ -30,5 +32,7 @@ class CreateMediaTable extends Migration
     public function down()
     {
         Schema::dropIfExists('media');
+        $directory = new Filesystem;
+        $directory->cleanDirectory('storage/app/public/media');
     }
 }

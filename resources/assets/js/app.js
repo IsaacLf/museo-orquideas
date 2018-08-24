@@ -22,10 +22,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 // Vue.use(VueRouter);
-Vue.component('entries', require('./components/Entries.vue'));
+Vue.component('entries', require('./components/entries/Entries.vue'));
 Vue.component('media', require('./components/media/Media.vue'));
 Vue.component('media-list', require('./components/media/List.vue'));
 Vue.component('media-square', require('./components/media/Square.vue'));
+Vue.component('users', require('./components/users/User.vue'));
+Vue.component('image-picker', require('./components/entries/ImagePicker.vue'));
 
 const app = new Vue({
     el: '#app'

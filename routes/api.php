@@ -17,4 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('entries', 'EntryApiController');
+Route::resource('entries', 'Api\EntryApiController');
+Route::resource('media', 'Api\MediaApiController');
+Route::resource('users', 'Api\UserApiController');
