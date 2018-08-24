@@ -55,7 +55,7 @@
                                                 <a @click="deleteEntry(entry.id)" href="#" class="btn btn-round btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-round btn-warning btn-sm">
+                                                <a :href="url+'/generate/'+entry.id" target="_blank" class="btn btn-round btn-warning btn-sm">
                                                     <i class="fas fa-qrcode"></i>
                                                 </a>
                                             </div>
