@@ -8,5 +8,5 @@
             <h1 class="my-inline-block">Edita la entrada</h1>
         </div>
     </div>
-    @include('admin.entries.form', ['entry' => $entry, 'url' => '/entries/'.$entry->id, 'method' => 'PATCH'])
+    @include('admin.entries.form', ['entry' => $entry, 'url' => '/entries/'.$entry->id, 'method' => 'POST'])
 @endsection

@@ -2,7 +2,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-success">
-                    @if($method == 'POST')
+                    @if(Request::is('entries/create'))
                         <h4 class="card-title">Crea una nueva entrada</h4>
                         <p class="card-category">Completa los campos</p>
                     @else
@@ -12,6 +12,11 @@
                 </div>
                 <div class="card-body">
                     <form id="createForm" action="{{ url($url) }}" method="{{ $method }}" enctype="multipart/form-data">
+                        @if(Request::is('entries/create'))
+                            {{ method_field('POST') }}
+                        @elseif(Request::is('entries/*'))
+                            {{ method_field('PATCH') }}
+                        @endif
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="entryTitle" class="bmd-label-floating">Titulo</label>

@@ -26,6 +26,12 @@ class Entry extends Model
     ];
 
     /**
+     * All the attributes are mass assignable
+     * 
+     * @var array
+     */
+    protected $guarded = [];
+    /**
      * Return the a string with name + extension of the image
      * 
      * @return string
