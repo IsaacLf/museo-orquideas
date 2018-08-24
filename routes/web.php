@@ -25,3 +25,6 @@ Route::get('/users', 'Admincontroller@users')->name('users')->middleware('admin'
 
 Route::post('/media/upload-new',  'MediaController@uploadImage');
 Route::post('/users/create','UserController@store');
+
+Route::get('/QR','QrController@generate');
+Route::get('entries/generate/{id}','QrController@generateUrl');
