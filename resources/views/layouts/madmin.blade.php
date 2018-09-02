@@ -45,13 +45,13 @@
                         <li class="nav-item {{ (Request::is('edit') ? 'active' : (Request::is('entries/create')) ? 'active' : (Request::is('entries/*/edit')) ? 'active' : '' ) }}">
                             <a class="nav-link" href="{{ url('/edit') }}">
                                 <i class="fas fa-list-ol"></i>
-                                <p>Entradas</p>
+                                <p>Catálogo</p>
                             </a>
                         </li>
                         <li class="nav-item  {{ (Request::is('upload') ? 'active' : '' ) }}">
                             <a class="nav-link" href="{{ url('/upload') }}">
                                 <i class="fas fa-images"></i>
-                                <p>Medios</p>
+                                <p>Multimedia</p>
                             </a>
                         </li>
                         @if(Auth::user()->profile == 'administrator')

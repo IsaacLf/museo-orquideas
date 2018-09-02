@@ -81,7 +81,9 @@ class MediaApiController extends Controller
         // return new MediaResource($medium);
         // exit;
         $medium->name = $request->name;
-        dump($request);
+        $content = $request->getContent();
+        dd($request->all());
+        dump($content);
         if($request->hasFile('newimage')){
             // $directory = new Filesystem;
             // $imagename = $medium->image.$medium->imageType; //The file to erase if updated

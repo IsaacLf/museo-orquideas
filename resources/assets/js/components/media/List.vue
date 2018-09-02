@@ -189,19 +189,19 @@ export default {
         updateMedia: function(){
             let vm = this;
             if(vm.uploadedNew){
-                var formData = new FormData();
-                formData.append('Hola', 'Mundo');
-                formData.append('Equis', 'De');
-                formData.append('LoL', 'SoS');
-                // formData.append('name', vm.editFields.name);
-                // formData.append('newimage', vm.editFields.file);
-                vm.formData = formData;
+                let fdata = new FormData();
+                fdata.append('Hola', 'Mundo');
+                fdata.append('Equis', 'De');
+                fdata.append('LoL', 'SoS');
+                fdata.append('name', vm.editFields.name);
+                fdata.append('newimage', vm.editFields.file);
+                vm.formData = fdata;
                 fetch('api/media/' + vm.editFields.id, {
                     method: 'PUT',
-                    body: formData,
                     headers: {
-                        'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-                    }
+                        'Accept': 'application/json'
+                    },
+                    body: fdata
                 })
                 .then(res => res.json())
                 .then(data => {
