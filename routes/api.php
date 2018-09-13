@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('entries', 'Api\EntryApiController');
-Route::resource('media', 'Api\MediaApiController');
+Route::resource('media', 'Api\MediaApiController')->except(['update']);
+Route::post('media/{medium}','Api\MediaApiController@update');
 Route::resource('users', 'Api\UserApiController');

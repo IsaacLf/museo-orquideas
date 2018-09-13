@@ -7,7 +7,7 @@ use App\Entry;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Media as MediaResource;
-use Iluminate\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Storage;
 
 class MediaApiController extends Controller
@@ -81,30 +81,26 @@ class MediaApiController extends Controller
         // return new MediaResource($medium);
         // exit;
         $medium->name = $request->name;
-        $content = $request->getContent();
-        dd($request->all());
-        dump($content);
         if($request->hasFile('newimage')){
-            // $directory = new Filesystem;
-            // $imagename = $medium->image.$medium->imageType; //The file to erase if updated
-            // $nimage = $request->file('newimage')->getRealPath();
-            // $nextension = $request->file('newimage')->getClientOriginalExtension();
-            // $medium->imageType = '.'.$nextension;
-            // $directory->delete('storage/app/public/media/'.$imagename);
-            // Storage::put(
-            //     'public/media/'.$medium->image.$medium->imageType,
-            //     file_get_contents($nimage)
-            // );
-            // //Update the entries with the updated photo
-            // $nentry;
-            // $entries = Entry::where('image', $medium->image)->get();
-            // foreach($entries as $entry){
-            //     $nentry = Entry::findOrFail($entry->id);
-            //     $nentry->imageType = $medium->imageType;
-            //     $nentry->save();
-            // }
+            $directory = new Filesystem;
+            $imagename = $medium->image.$medium->imageType; //The file to erase if updated
+            $nimage = $request->file('newimage')->getRealPath();
+            $nextension = $request->file('newimage')->getClientOriginalExtension();
+            $medium->imageType = '.'.$nextension;
+            $directory->delete('storage/app/public/media/'.$imagename);
+            Storage::put(
+                'public/media/'.$medium->image.$medium->imageType,
+                file_get_contents($nimage)
+            );
+            //Update the entries with the updated photo
+            $nentry;
+            $entries = Entry::where('image', $medium->image)->get();
+            foreach($entries as $entry){
+                $nentry = Entry::findOrFail($entry->id);
+                $nentry->imageType = $medium->imageType;
+                $nentry->save();
+            }
         }
-        exit;
         if($medium->save()){
             return new MediaResource($medium);
         }

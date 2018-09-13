@@ -190,17 +190,31 @@ export default {
             let vm = this;
             if(vm.uploadedNew){
                 let fdata = new FormData();
-                fdata.append('Hola', 'Mundo');
-                fdata.append('Equis', 'De');
-                fdata.append('LoL', 'SoS');
                 fdata.append('name', vm.editFields.name);
                 fdata.append('newimage', vm.editFields.file);
                 vm.formData = fdata;
+                /** We'll try to solve this problem via $.ajax() method */
+                // $.ajax({
+                //     url: "api/media/" + vm.editFields.id,
+                //     type: "POST",
+                //     data: fdata, //Add the FormData object to the data parameter
+                //     processData: false, //Tell JQuert not to process data
+                //     contentType: false, //Tell JQuery not to set Content-Type
+                //     success: function(response, status, jqxhr){
+                //         swal(
+                //         "Imagen actualizada correctamente",
+                //             {icon: 'success',
+                //             timer: 3000}
+                //         );
+                //         vm.$emit('call-api');
+                //     },
+                //     error: function(jqxhr, status, errorMessage){
+                //         console.log(errorMessage);
+                //     }
+                // });
+                /** End */
                 fetch('api/media/' + vm.editFields.id, {
-                    method: 'PUT',
-                    headers: {
-                        'Accept': 'application/json'
-                    },
+                    method: 'POST',
                     body: fdata
                 })
                 .then(res => res.json())
